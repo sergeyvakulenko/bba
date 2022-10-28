@@ -1,24 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Post } from './components/Post';
+import { Comments } from './components/Comments';
+import { postsActions, postsSelectors } from './data/posts';
 import './App.css';
 
 function App() {
+  const dispatch = useDispatch();
+  const posts = useSelector(postsSelectors.getPosts);
+  const [postId, setPostId] = useState<number | null>(null);
+
+  const handleSetPostId = (postId: number | null) => {
+    setPostId(postId);
+  };
+
+  useEffect(() => {
+    dispatch(postsActions.fetch());
+  }, [dispatch]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div>
+        {posts.map((p) => 
+          <Post post={p} onSetPostId={handleSetPostId} />
+        )}
+      </div>
+      <Comments 
+        onSetPostId={handleSetPostId} 
+        postId={postId}
+      />
     </div>
   );
 }
