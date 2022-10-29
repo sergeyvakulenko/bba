@@ -30,6 +30,27 @@ const reducer = (state = initialState, action: CommentsActions | TagsActions) =>
         comments: [],
         error: action.payload.error
       };
+    case ActionTypes.CREATE:
+      return {
+        ...state,
+        pending: true
+      };
+    case ActionTypes.CREATE_SUCCESS:
+      return {
+        ...state,
+        pending: false,
+        comments: [
+          ...state.comments,
+          action.payload.comment,
+        ],
+        error: null
+      };
+    case ActionTypes.CREATE_FAILURE:
+      return {
+        ...state,
+        pending: false,
+        error: action.payload.error
+      };
     case tagsActions.ActionTypes.CREATE_SUCCESS:
       const { payload: { tag } } = action;
       const comments = [...state.comments];

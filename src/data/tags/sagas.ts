@@ -6,7 +6,7 @@ import {
   fetchFailure,
   fetchSuccess
 } from "./actions";
-import { getTags, createTag } from "./api";
+import { createTag, getTags } from "./api";
 import { CreateTagRequest } from "./types";
 
 function* fetchTags() {
@@ -24,8 +24,8 @@ function* fetchTags() {
 function* create(action: CreateTagRequest) {
   try {
     yield delay(500); // To emulate network
-    const { payload: { value, commentId } } = action;
-    const response = yield* call(createTag, { value, commentId });
+    const { payload: { tag } } = action;
+    const response = yield* call(createTag, tag);
     yield put(createSuccess({ tag: response.data }));
   } catch (e) {
     yield put(createFailure({ error: 'Something went wrong' }));
@@ -35,12 +35,12 @@ function* create(action: CreateTagRequest) {
   }
 }
 
-function* watchCreateTag() {
-  yield takeEvery(ActionTypes.CREATE, create);
-}
-
 function* watchFetchTags() {
   yield takeLatest(ActionTypes.FETCH, fetchTags);
+}
+
+function* watchCreateTag() {
+  yield takeEvery(ActionTypes.CREATE, create);
 }
 
 const tagSagas = [watchFetchTags, watchCreateTag];

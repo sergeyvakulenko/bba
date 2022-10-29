@@ -2,11 +2,16 @@ import {
   FetchPostsFailure,
   FetchPostsFailurePayload,
   FetchPostsRequest,
-  FetchPostsRequestPayload,
   FetchPostsSuccess,
   FetchPostsSuccessPayload,
   SetActivePostId,
-  SetActivePostIdPayload
+  SetActivePostIdPayload,
+  SetAuthorId,
+  SetAuthorIdPayload,
+  SetPage,
+  setPagePayload,
+  SetSearch,
+  SetSearchPayload
 } from "./types";
 
 export enum ActionTypes {
@@ -14,14 +19,13 @@ export enum ActionTypes {
   FETCH_SUCCESS = "[Posts] Fetch Success",
   FETCH_FAILURE = "[Posts] Fetch Failure",
   SET_ACTIVE_ID = "[Posts] Set Active Post Id",
-  SEARCH = "[Posts] Search",
+  SET_SEARCH = "[Posts] Set Search",
+  SET_AUTHOR_ID = "[Posts] Set Author Id",
+  SET_PAGE = "[Posts] Set Page",
 };
 
-export const fetch = (
-  payload?: FetchPostsRequestPayload
-): FetchPostsRequest => ({
+export const fetch = (): FetchPostsRequest => ({
   type: ActionTypes.FETCH,
-  payload,
 });
 
 export const fetchSuccess = (
@@ -42,5 +46,26 @@ export const setActivePostId = (
   payload: SetActivePostIdPayload
 ): SetActivePostId => ({
   type: ActionTypes.SET_ACTIVE_ID,
+  payload,
+});
+
+export const setSearch = (
+  payload: SetSearchPayload
+): SetSearch => ({
+  type: ActionTypes.SET_SEARCH,
+  payload,
+});
+
+export const setAuthorId = (
+  payload: SetAuthorIdPayload
+): SetAuthorId => ({
+  type: ActionTypes.SET_AUTHOR_ID,
+  payload,
+});
+
+export const setPage = (
+  payload: setPagePayload
+): SetPage => ({
+  type: ActionTypes.SET_PAGE,
   payload,
 });

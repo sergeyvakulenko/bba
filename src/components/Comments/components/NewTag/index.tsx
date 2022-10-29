@@ -36,7 +36,12 @@ const NewTag: React.FC<TProps> = ({ commentId, tags: commentTags }) => {
   };
 
   const handleCreateTag = () => {
-    dispatch(tagsActions.create({ value: tag, commentId }));
+    dispatch(tagsActions.create({
+      tag: { 
+        value: tag, 
+        commentId 
+      }
+    }));
     setOpen(false);
   };
 

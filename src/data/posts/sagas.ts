@@ -1,4 +1,5 @@
-import { call, delay, put, takeLatest } from "typed-redux-saga";
+import { call, delay, put, select, takeLatest } from "typed-redux-saga";
+import { postsSelectors } from ".";
 import { IParams } from "../api";
 import { commentsActions } from "../comments";
 import {
@@ -7,10 +8,11 @@ import {
   fetchSuccess
 } from "./actions";
 import { getPosts } from "./api";
-import { FetchPostsRequest, FetchPostsRequestPayload, SetActivePostId } from "./types";
+import { SetActivePostId } from "./types";
 
-const processFetchParams = (payload: FetchPostsRequestPayload): IParams => {
-  const { search, authorId } = payload;
+function* processFetchParams() {
+  const search = yield* select(postsSelectors.getSearch);
+  const authorId = yield* select(postsSelectors.getAuthorId);
   const params: IParams = {};
   
   if (search) {
@@ -24,11 +26,10 @@ const processFetchParams = (payload: FetchPostsRequestPayload): IParams => {
   return params;
 }
 
-function* fetchPosts(action: FetchPostsRequest) {
+function* fetchPosts() {
   try {
     yield delay(500); // To emulate network
-    const { payload } = action;
-    const params = payload ? processFetchParams(payload) : {};
+    const params = yield* processFetchParams();
     const response = yield* call(getPosts, params);
     yield put(fetchSuccess({ posts: response.data }));
   } catch (e) {
@@ -47,7 +48,12 @@ function* setActivePostId(action: SetActivePostId) {
 }
 
 function* watchFetchPosts() {
-  yield takeLatest(ActionTypes.FETCH, fetchPosts);
+  yield takeLatest([
+    ActionTypes.FETCH, 
+    ActionTypes.SET_SEARCH,
+    ActionTypes.SET_AUTHOR_ID,
+    ActionTypes.SET_PAGE,
+  ], fetchPosts);
 }
 
 function* watchSetActivePostId() {

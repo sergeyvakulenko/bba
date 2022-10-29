@@ -1,19 +1,43 @@
-import { useSelector } from 'react-redux';
-import { postsSelectors } from '../../data/posts';
+import { useDispatch, useSelector } from 'react-redux';
+import { Pagination } from 'antd';
+import styled from 'styled-components';
+import { postsActions, postsSelectors } from '../../data/posts';
+import { DEFAULT_PAGE_SIZE } from '../../data/posts/types';
 import { Spinner } from '../Spinner';
 import { Post } from './components/Post';
 import { Search } from './components/Search';
 
+const PaginationContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+`;
+
+const EmptyStateContainer = styled.div`
+  height: 100vh; 
+  width: 100%;
+  display: flex; 
+  justify-content: center; 
+  align-items: center;
+`;
+
 const Posts = () => {
+  const dispatch = useDispatch();
   const isLoading = useSelector(postsSelectors.isLoading);
-  const posts = useSelector(postsSelectors.getPosts);
+  const posts = useSelector(postsSelectors.getPaginatedPosts);
+  const total = useSelector(postsSelectors.getTotal);
+  const page = useSelector(postsSelectors.getPage);
 
   const renderPosts = () => {
     if (posts.length > 0) { 
       return posts.map((p) => <Post key={p.id} post={p} />);
     }
 
-    return <div style={{ height: '100vh', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>No data</div>;
+    return <EmptyStateContainer>No data</EmptyStateContainer>;
+  };
+
+  const handlePageChange = (newPage: number) => {
+    dispatch(postsActions.setPage({ page: newPage }));
   };
 
   return (
@@ -21,6 +45,15 @@ const Posts = () => {
       <Search />
       <div>
         {isLoading ? <Spinner /> : renderPosts()}
+        {posts.length > 0 && <PaginationContainer>
+          <Pagination 
+            onChange={handlePageChange}
+            current={page}
+            defaultCurrent={1} 
+            defaultPageSize={DEFAULT_PAGE_SIZE}
+            total={total} 
+          />
+        </PaginationContainer>}
       </div>
     </div>
   );

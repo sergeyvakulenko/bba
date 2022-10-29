@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Input, Select } from 'antd';
 import styled from 'styled-components';
-import { postsActions } from '../../../../data/posts';
+import { postsActions, postsSelectors } from '../../../../data/posts';
 import { usersSelectors } from '../../../../data/users';
 
 const { Search: AntdSearch } = Input;
@@ -21,17 +21,33 @@ const SearchInputContainer = styled.div`
 const Search = () => {
   const dispatch = useDispatch();
   const users = useSelector(usersSelectors.getUsers);
-  const [search, setSearch] = useState<string | undefined>();
-  const [authorId, setAuthorId] = useState<number | undefined>();
+  const search = useSelector(postsSelectors.getSearch);
+  const authorId = useSelector(postsSelectors.getAuthorId);
 
   useEffect(() => {
-    dispatch(postsActions.fetch({ search, authorId }));
+    dispatch(postsActions.fetch());
   }, [search, authorId, dispatch]);
+
+  const handleSearch = (value: string) => {
+    dispatch(postsActions.setSearch({ 
+      search: value !== ''
+        ? value
+        : null
+    }));
+  };
+
+  const handleAuthor = (value: number) => {
+    dispatch(postsActions.setAuthorId({ 
+      authorId: value !== undefined 
+        ? value
+        : null
+    }));
+  };
 
   return (
     <Container>
       <SearchInputContainer>
-        <AntdSearch allowClear placeholder="Search post" onSearch={setSearch} />
+        <AntdSearch allowClear placeholder="Search post" onSearch={handleSearch} />
       </SearchInputContainer>
       <SearchInputContainer>
         <Select
@@ -40,7 +56,7 @@ const Search = () => {
             (option!.children as unknown as string).toLowerCase().includes(input.toLowerCase()) 
             || option?.value?.toString() === input
           }
-          onChange={setAuthorId}
+          onChange={handleAuthor}
           placeholder="Search author"
           showSearch
           style={{ width: 200 }}

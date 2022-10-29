@@ -1,3 +1,4 @@
+import { OmitProps } from "antd/lib/transfer/ListBody";
 import { ITag } from "../tags/types";
 import { ActionTypes } from "./actions";
 
@@ -10,6 +11,8 @@ export interface IComment {
   postId: number;
   tags?: ITag[];
 }
+
+export type TNewComment = Omit<IComment, "id" | "tags">;
 
 export interface CommentsState {
   pending: boolean;
@@ -29,6 +32,18 @@ export interface FetchCommentsFailurePayload {
   error: string;
 }
 
+export interface CreateCommentRequestPayload {
+  comment: TNewComment;
+}
+
+export interface CreateCommentSuccessPayload {
+  comment: IComment;
+}
+
+export interface CreateCommentFailurePayload {
+  error: string;
+}
+
 export interface FetchCommentsRequest {
   type: typeof ActionTypes.FETCH;
   payload: FetchCommentsRequestPayload;
@@ -44,7 +59,25 @@ export type FetchCommentsFailure = {
   payload: FetchCommentsFailurePayload;
 };
 
+export interface CreateCommentRequest {
+  type: typeof ActionTypes.CREATE;
+  payload: CreateCommentRequestPayload;
+}
+
+export type CreateCommentSuccess = {
+  type: typeof ActionTypes.CREATE_SUCCESS;
+  payload: CreateCommentSuccessPayload;
+};
+
+export type CreateCommentFailure = {
+  type: typeof ActionTypes.CREATE_FAILURE;
+  payload: CreateCommentFailurePayload;
+};
+
 export type CommentsActions =
   | FetchCommentsRequest
   | FetchCommentsSuccess
-  | FetchCommentsFailure;
+  | FetchCommentsFailure
+  | CreateCommentRequest
+  | CreateCommentSuccess
+  | CreateCommentFailure;

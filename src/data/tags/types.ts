@@ -6,6 +6,8 @@ export interface ITag {
   commentId: number;
 }
 
+export type TNewTag = Omit<ITag, "id">;
+
 export interface TagsState {
   pending: boolean;
   tags: string[];
@@ -21,8 +23,7 @@ export interface FetchTagsFailurePayload {
 }
 
 export interface CreateTagRequestPayload {
-  value: string;
-  commentId: number;
+  tag: TNewTag;
 }
 
 export interface CreateTagSuccessPayload {
