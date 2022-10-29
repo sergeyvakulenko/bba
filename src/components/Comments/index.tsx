@@ -16,15 +16,20 @@ const Comments: React.FC = () => {
     dispatch(postsActions.setActivePostId({ postId: null }));
   }
 
-  return (<Drawer 
-    title="Comments" 
-    placement="right" 
-    onClose={handleClose} 
-    open={!!postId}
-    width='40%'
-  >
-    {isLoading ? <Spinner /> : highLevelComments.map((c) => <Comment key={c.id} comment={c} />)}
-  </Drawer>)
+  return (
+    <Drawer 
+      title="Comments" 
+      placement="right" 
+      onClose={handleClose} 
+      open={!!postId}
+      width='40%'
+    >
+      {isLoading 
+        ? <Spinner /> 
+        : highLevelComments.map((c) => <Comment key={c.id} comment={c} />)
+      }
+    </Drawer>
+  );
 };
 
 export { Comments };

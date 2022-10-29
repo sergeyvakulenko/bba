@@ -28,13 +28,11 @@ const Posts = () => {
   const total = useSelector(postsSelectors.getTotal);
   const page = useSelector(postsSelectors.getPage);
 
-  const renderPosts = () => {
-    if (posts.length > 0) { 
-      return posts.map((p) => <Post key={p.id} post={p} />);
-    }
-
-    return <EmptyStateContainer>No data</EmptyStateContainer>;
-  };
+  const renderPosts = () => (
+    (posts.length > 0)
+      ? posts.map((p) => <Post key={p.id} post={p} />)
+      : <EmptyStateContainer>No data</EmptyStateContainer>
+  );
 
   const handlePageChange = (newPage: number) => {
     dispatch(postsActions.setPage({ page: newPage }));
@@ -49,7 +47,6 @@ const Posts = () => {
           <Pagination 
             onChange={handlePageChange}
             current={page}
-            defaultCurrent={1} 
             defaultPageSize={DEFAULT_PAGE_SIZE}
             total={total} 
           />

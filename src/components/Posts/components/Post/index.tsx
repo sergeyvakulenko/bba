@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { useDispatch } from 'react-redux';
 import { Card } from 'antd';
 import styled from 'styled-components';
@@ -13,7 +13,7 @@ const Container = styled.div`
   margin: 10px 0 10px 0;
 `;
 
-const Post: React.FC<TProps> = ({ post }) => {
+const Post: React.FC<TProps> = memo(({ post }) => {
   const dispatch = useDispatch();
   const { id: postId, body, title, user: { username } } = post;
 
@@ -33,6 +33,6 @@ const Post: React.FC<TProps> = ({ post }) => {
       </Card>
     </Container>
   );
-};
+});
 
 export { Post };
