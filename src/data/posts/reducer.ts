@@ -41,12 +41,14 @@ const reducer = (state = initialState, action: PostsActions) => {
       return {
         ...state,
         pending: true,
+        page: 1,
         search: action.payload.search,
       };
     case ActionTypes.SET_AUTHOR_ID:
       return {
         ...state,
         pending: true,
+        page: 1,
         authorId: action.payload.authorId,
       };
     case ActionTypes.SET_PAGE:

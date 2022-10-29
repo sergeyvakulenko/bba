@@ -71,6 +71,7 @@ const NewTag: React.FC<TProps> = ({ commentId, tags: commentTags }) => {
     <Popover 
       arrowPointAtCenter
       content={renderContent()} 
+      destroyTooltipOnHide
       title="Add new tag" 
       trigger="click"
       open={open}
