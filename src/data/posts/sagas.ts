@@ -1,4 +1,5 @@
-import { call, put, takeLatest } from "typed-redux-saga";
+import { call, delay, put, takeLatest } from "typed-redux-saga";
+import { IParams } from "../api";
 import { commentsActions } from "../comments";
 import {
   ActionTypes,
@@ -6,11 +7,29 @@ import {
   fetchSuccess
 } from "./actions";
 import { getPosts } from "./api";
-import { SetActivePostId } from "./types";
+import { FetchPostsRequest, FetchPostsRequestPayload, SetActivePostId } from "./types";
 
-function* fetchPosts() {
+const processFetchParams = (payload: FetchPostsRequestPayload): IParams => {
+  const { search, authorId } = payload;
+  const params: IParams = {};
+  
+  if (search) {
+    params.q = search;
+  }
+
+  if (authorId) {
+    params['user.id'] = authorId;
+  }
+  
+  return params;
+}
+
+function* fetchPosts(action: FetchPostsRequest) {
   try {
-    const response = yield* call(getPosts);
+    yield delay(500); // To emulate network
+    const { payload } = action;
+    const params = payload ? processFetchParams(payload) : {};
+    const response = yield* call(getPosts, params);
     yield put(fetchSuccess({ posts: response.data }));
   } catch (e) {
     yield put(fetchFailure({ error: 'Something went wrong' }));
@@ -21,7 +40,10 @@ function* fetchPosts() {
 }
 
 function* setActivePostId(action: SetActivePostId) {
-    yield put(commentsActions.fetch(action.payload));
+  const { payload: { postId }} = action;
+  if (!!postId) {
+    yield put(commentsActions.fetch({ postId }));
+  }
 }
 
 function* watchFetchPosts() {

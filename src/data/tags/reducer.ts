@@ -21,8 +21,8 @@ const reducer = (state = initialState, action: TagsActions) => {
       // for the suggestion feature after receiving tags from BE.
       const uniqueTags: string[] = [];
       action.payload.tags.forEach((c) => {
-        if (!uniqueTags.includes(c.body)) {
-          uniqueTags.push(c.body);
+        if (!uniqueTags.includes(c.value)) {
+          uniqueTags.push(c.value);
         }
       });
 
@@ -37,6 +37,31 @@ const reducer = (state = initialState, action: TagsActions) => {
         ...state,
         pending: false,
         tags: [],
+        error: action.payload.error
+      };
+    case ActionTypes.CREATE:
+      return {
+        ...state,
+        pending: true
+      };
+    case ActionTypes.CREATE_SUCCESS:
+      const { payload: { tag: { value } } } = action;
+      const tags = [...state.tags];
+      if (!tags.includes(value)) {
+        tags.push(value);
+      }
+      return {
+        ...state,
+        pending: false,
+        tags: [
+          ...tags
+        ],
+        error: null
+      };
+    case ActionTypes.CREATE_FAILURE:
+      return {
+        ...state,
+        pending: false,
         error: action.payload.error
       };
     default:

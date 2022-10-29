@@ -1,3 +1,5 @@
+import { tagsActions } from "../tags";
+import { TagsActions } from "../tags/types";
 import { ActionTypes } from "./actions"; 
 import { CommentsActions, CommentsState } from "./types";
 
@@ -7,7 +9,7 @@ const initialState: CommentsState = {
   error: null
 };
 
-const reducer = (state = initialState, action: CommentsActions) => {
+const reducer = (state = initialState, action: CommentsActions | TagsActions) => {
   switch (action.type) {
     case ActionTypes.FETCH:
       return {
@@ -27,6 +29,17 @@ const reducer = (state = initialState, action: CommentsActions) => {
         pending: false,
         comments: [],
         error: action.payload.error
+      };
+    case tagsActions.ActionTypes.CREATE_SUCCESS:
+      const { payload: { tag } } = action;
+      const comments = [...state.comments];
+      const changedCommentIndex = state.comments.findIndex((c) => c.id === tag.commentId);
+      comments[changedCommentIndex].tags?.push(tag);
+      return {
+        ...state,
+        comments: [
+          ...comments,
+        ]
       };
     default:
       return {

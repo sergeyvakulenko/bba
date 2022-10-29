@@ -1,3 +1,4 @@
+import { ITag } from "../tags/types";
 import { ActionTypes } from "./actions";
 
 export interface IComment {
@@ -7,6 +8,7 @@ export interface IComment {
   name: string;
   parentId?: number;
   postId: number;
+  tags?: ITag[];
 }
 
 export interface CommentsState {

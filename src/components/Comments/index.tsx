@@ -1,19 +1,19 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Drawer } from 'antd';
-import { useSelector } from "react-redux";
+import { postsActions, postsSelectors } from "../../data/posts";
 import { commentsSelectors } from "../../data/comments";
+import { Spinner } from '../Spinner';
+import { Comment } from "./components/Comment";
 
-type TProps = {
-  onSetPostId: (postId: number | null) => void;
-  postId: number | null;
-};
-
-
-const Comments: React.FC<TProps> = ({ onSetPostId, postId }) => {
-  const comments = useSelector(commentsSelectors.getComments);
+const Comments: React.FC = () => {
+  const dispatch = useDispatch();
+  const postId = useSelector(postsSelectors.getActivePostId);
+  const isLoading = useSelector(commentsSelectors.isLoading);
+  const highLevelComments = useSelector(commentsSelectors.getHighLevelComments);
   
   const handleClose = () => {
-    onSetPostId(null);
+    dispatch(postsActions.setActivePostId({ postId: null }));
   }
 
   return (<Drawer 
@@ -23,7 +23,7 @@ const Comments: React.FC<TProps> = ({ onSetPostId, postId }) => {
     open={!!postId}
     width='40%'
   >
-    {comments.map((c) => <p>{c.body}</p>)}
+    {isLoading ? <Spinner /> : highLevelComments.map((c) => <Comment key={c.id} comment={c} />)}
   </Drawer>)
 };
 

@@ -2,7 +2,8 @@ import { ActionTypes } from "./actions";
 
 export interface ITag {
   id: number;
-  body: string;
+  value: string;
+  commentId: number;
 }
 
 export interface TagsState {
@@ -16,6 +17,19 @@ export interface FetchTagsSuccessPayload {
 }
 
 export interface FetchTagsFailurePayload {
+  error: string;
+}
+
+export interface CreateTagRequestPayload {
+  value: string;
+  commentId: number;
+}
+
+export interface CreateTagSuccessPayload {
+  tag: ITag;
+}
+
+export interface CreateTagFailurePayload {
   error: string;
 }
 
@@ -33,7 +47,25 @@ export type FetchTagsFailure = {
   payload: FetchTagsFailurePayload;
 };
 
+export interface CreateTagRequest {
+  type: typeof ActionTypes.CREATE;
+  payload: CreateTagRequestPayload;
+}
+
+export type CreateTagSuccess = {
+  type: typeof ActionTypes.CREATE_SUCCESS;
+  payload: CreateTagSuccessPayload;
+};
+
+export type CreateTagFailure = {
+  type: typeof ActionTypes.CREATE_FAILURE;
+  payload: CreateTagFailurePayload;
+};
+
 export type TagsActions =
   | FetchTagsRequest
   | FetchTagsSuccess
-  | FetchTagsFailure;
+  | FetchTagsFailure
+  | CreateTagRequest
+  | CreateTagSuccess
+  | CreateTagFailure;

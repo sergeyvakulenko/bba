@@ -1,4 +1,4 @@
-import { all, call, put, takeLatest } from "typed-redux-saga";
+import { call, delay, put, takeLatest } from "typed-redux-saga";
 import {
   ActionTypes,
   fetchFailure,
@@ -9,8 +9,10 @@ import { FetchCommentsRequest } from "./types";
 
 function* fetchComments(action: FetchCommentsRequest) {
   try {
+    yield delay(500); // To emulate network
     const postId = action.payload.postId;
-    const response = yield* call(getComments, postId);
+    const params = {'_embed': 'tags'};
+    const response = yield* call(getComments, postId, params);
     yield put(fetchSuccess({ comments: response.data }));
   } catch (e) {
     yield put(fetchFailure({ error: 'Something went wrong' }));
@@ -21,8 +23,7 @@ function* fetchComments(action: FetchCommentsRequest) {
 }
 
 function* watchFetchComments() {
-  console.log(1);
-  yield all([takeLatest(ActionTypes.FETCH, fetchComments)]);
+  yield takeLatest(ActionTypes.FETCH, fetchComments);
 }
 
 const commentsSagas = [watchFetchComments];

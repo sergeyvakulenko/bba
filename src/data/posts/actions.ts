@@ -2,6 +2,7 @@ import {
   FetchPostsFailure,
   FetchPostsFailurePayload,
   FetchPostsRequest,
+  FetchPostsRequestPayload,
   FetchPostsSuccess,
   FetchPostsSuccessPayload,
   SetActivePostId,
@@ -13,10 +14,14 @@ export enum ActionTypes {
   FETCH_SUCCESS = "[Posts] Fetch Success",
   FETCH_FAILURE = "[Posts] Fetch Failure",
   SET_ACTIVE_ID = "[Posts] Set Active Post Id",
+  SEARCH = "[Posts] Search",
 };
 
-export const fetch = (): FetchPostsRequest => ({
+export const fetch = (
+  payload?: FetchPostsRequestPayload
+): FetchPostsRequest => ({
   type: ActionTypes.FETCH,
+  payload,
 });
 
 export const fetchSuccess = (

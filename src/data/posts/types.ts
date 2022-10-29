@@ -5,6 +5,10 @@ export interface IPost {
   body: string;
   title: string;
   userId: number;
+  user: {
+    id: number;
+    username: string;
+  }
 }
 
 export interface PostsState {
@@ -12,6 +16,11 @@ export interface PostsState {
   posts: IPost[];
   error: string | null;
   activePostId: number | null;
+}
+
+export interface FetchPostsRequestPayload {
+  search: string | undefined;
+  authorId: number | undefined;
 }
 
 export interface FetchPostsSuccessPayload {
@@ -23,11 +32,12 @@ export interface FetchPostsFailurePayload {
 }
 
 export interface SetActivePostIdPayload {
-  postId: number;
+  postId: number | null;
 }
 
 export interface FetchPostsRequest {
   type: typeof ActionTypes.FETCH;
+  payload?: FetchPostsRequestPayload;
 }
 
 export interface FetchPostsSuccess {
@@ -48,4 +58,5 @@ export interface SetActivePostId {
 export type PostsActions =
   | FetchPostsRequest
   | FetchPostsSuccess
-  | FetchPostsFailure;
+  | FetchPostsFailure
+  | SetActivePostId;
