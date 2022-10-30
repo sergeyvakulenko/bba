@@ -65,6 +65,8 @@ const Search = () => {
         <Select
           allowClear
           filterOption={(input, option) =>
+            // Not the best practice, but I've copied this from
+            // the docs, and we're using Antd for prototyping.
             (option!.children as unknown as string)
               .toLowerCase()
               .includes(input.toLowerCase()) ||

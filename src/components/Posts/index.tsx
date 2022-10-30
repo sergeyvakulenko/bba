@@ -25,15 +25,21 @@ const Posts = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector(postsSelectors.isLoading);
   const posts = useSelector(postsSelectors.getPaginatedPosts);
+  const error = useSelector(postsSelectors.getError);
   const total = useSelector(postsSelectors.getTotal);
   const page = useSelector(postsSelectors.getPage);
 
-  const renderPosts = () =>
-    posts.length > 0 ? (
+  const renderPosts = () => {
+    if (error) {
+      return <EmptyStateContainer>{error}</EmptyStateContainer>;
+    }
+
+    return posts.length > 0 ? (
       posts.map((p) => <Post key={p.id} post={p} />)
     ) : (
       <EmptyStateContainer>No data</EmptyStateContainer>
     );
+  };
 
   const handlePageChange = (newPage: number) => {
     dispatch(postsActions.setPage({ page: newPage }));

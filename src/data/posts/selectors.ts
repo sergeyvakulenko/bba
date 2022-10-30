@@ -5,6 +5,7 @@ import { DEFAULT_PAGE_SIZE } from "./types";
 const getState = (rootState: RootState) => rootState.posts;
 
 export const isLoading = createSelector(getState, (state) => state.pending);
+export const getError = createSelector(getState, (state) => state.error);
 export const getPosts = createSelector(getState, (state) => state.posts);
 export const getTotal = createSelector(getPosts, (posts) => posts.length);
 export const getActivePostId = createSelector(

@@ -59,7 +59,7 @@ const Comment: React.FC<TProps> = memo(({ comment }) => {
     setReplyText(e.target.value);
   };
 
-  const handleReplySumbit = () => {
+  const handleReplySubmit = () => {
     if (postId) {
       dispatch(
         commentsActions.create({
@@ -82,7 +82,7 @@ const Comment: React.FC<TProps> = memo(({ comment }) => {
         content={
           <Editor
             onChange={handleReplyChange}
-            onSubmit={handleReplySumbit}
+            onSubmit={handleReplySubmit}
             value={replyText}
           />
         }

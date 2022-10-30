@@ -10,10 +10,19 @@ const Comments: React.FC = () => {
   const dispatch = useDispatch();
   const postId = useSelector(postsSelectors.getActivePostId);
   const isLoading = useSelector(commentsSelectors.isLoading);
+  const error = useSelector(commentsSelectors.getError);
   const highLevelComments = useSelector(commentsSelectors.getHighLevelComments);
 
   const handleClose = () => {
     dispatch(postsActions.setActivePostId({ postId: null }));
+  };
+
+  const renderComments = () => {
+    if (error) {
+      return error;
+    }
+
+    return highLevelComments.map((c) => <Comment key={c.id} comment={c} />);
   };
 
   return (
@@ -24,11 +33,7 @@ const Comments: React.FC = () => {
       open={!!postId}
       width="40%"
     >
-      {isLoading ? (
-        <Spinner />
-      ) : (
-        highLevelComments.map((c) => <Comment key={c.id} comment={c} />)
-      )}
+      {isLoading ? <Spinner /> : renderComments()}
     </Drawer>
   );
 };

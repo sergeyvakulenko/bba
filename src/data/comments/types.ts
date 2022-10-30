@@ -1,4 +1,3 @@
-import { OmitProps } from "antd/lib/transfer/ListBody";
 import { ITag } from "../tags/types";
 import { ActionTypes } from "./actions";
 
