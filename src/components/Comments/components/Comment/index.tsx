@@ -1,12 +1,12 @@
-import React, { memo, useMemo, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Avatar, Button, Comment as AntdComment, Form, Input } from 'antd';
-import styled from 'styled-components';
-import { commentsActions, commentsSelectors } from '../../../../data/comments';
-import { IComment } from "../../../../data/comments/types";
-import { CURRENT_USER } from '../../../../data/current_user/mock';
-import { postsSelectors } from '../../../../data/posts';
-import { Tags } from '../Tags';
+import React, { memo, useMemo, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Avatar, Button, Comment as AntdComment, Form, Input } from "antd";
+import styled from "styled-components";
+import { commentsActions, commentsSelectors } from "data/comments";
+import { IComment } from "data/comments/types";
+import { CURRENT_USER } from "data/current_user/mock";
+import { postsSelectors } from "data/posts";
+import { Tags } from "../Tags";
 
 const { TextArea } = Input;
 
@@ -44,12 +44,12 @@ const Comment: React.FC<TProps> = memo(({ comment }) => {
   const postId = useSelector(postsSelectors.getActivePostId);
   const comments = useSelector(commentsSelectors.getChildComments);
   const childComments = useMemo(
-    () => comments.filter((c) => c.parentId === commentId), 
+    () => comments.filter((c) => c.parentId === commentId),
     [comments, commentId]
   );
 
   const [replyOpen, setReplyOpen] = useState(false);
-  const [replyText, setReplyText] = useState('');
+  const [replyText, setReplyText] = useState("");
 
   const handleReplyClick = () => {
     setReplyOpen(!replyOpen);
@@ -61,15 +61,17 @@ const Comment: React.FC<TProps> = memo(({ comment }) => {
 
   const handleReplySumbit = () => {
     if (postId) {
-      dispatch(commentsActions.create({ 
-        comment: {
-          parentId: commentId,
-          name: CURRENT_USER.name,
-          email: CURRENT_USER.email,
-          body: replyText,
-          postId: postId
-        } 
-      }));
+      dispatch(
+        commentsActions.create({
+          comment: {
+            parentId: commentId,
+            name: CURRENT_USER.name,
+            email: CURRENT_USER.email,
+            body: replyText,
+            postId: postId,
+          },
+        })
+      );
       setReplyOpen(false);
     }
   };
@@ -91,7 +93,11 @@ const Comment: React.FC<TProps> = memo(({ comment }) => {
   return (
     <Container>
       <AntdComment
-        actions={[<span key="comment-basic-reply-to" onClick={handleReplyClick}>Reply</span>]}
+        actions={[
+          <span key="comment-basic-reply-to" onClick={handleReplyClick}>
+            Reply
+          </span>,
+        ]}
         author={name}
         avatar={<Avatar src="https://joeschmoe.io/api/v1/random" alt={name} />}
         content={
@@ -102,7 +108,9 @@ const Comment: React.FC<TProps> = memo(({ comment }) => {
         }
       >
         {replyOpen && renderReply()}
-        {childComments.map((c) => <Comment key={c.id} comment={c} />)}
+        {childComments.map((c) => (
+          <Comment key={c.id} comment={c} />
+        ))}
       </AntdComment>
     </Container>
   );

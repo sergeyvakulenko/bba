@@ -11,7 +11,7 @@ import {
   SetPage,
   setPagePayload,
   SetSearch,
-  SetSearchPayload
+  SetSearchPayload,
 } from "./types";
 
 export enum ActionTypes {
@@ -22,7 +22,7 @@ export enum ActionTypes {
   SET_SEARCH = "[Posts] Set Search",
   SET_AUTHOR_ID = "[Posts] Set Author Id",
   SET_PAGE = "[Posts] Set Page",
-};
+}
 
 export const fetch = (): FetchPostsRequest => ({
   type: ActionTypes.FETCH,
@@ -49,23 +49,17 @@ export const setActivePostId = (
   payload,
 });
 
-export const setSearch = (
-  payload: SetSearchPayload
-): SetSearch => ({
+export const setSearch = (payload: SetSearchPayload): SetSearch => ({
   type: ActionTypes.SET_SEARCH,
   payload,
 });
 
-export const setAuthorId = (
-  payload: SetAuthorIdPayload
-): SetAuthorId => ({
+export const setAuthorId = (payload: SetAuthorIdPayload): SetAuthorId => ({
   type: ActionTypes.SET_AUTHOR_ID,
   payload,
 });
 
-export const setPage = (
-  payload: setPagePayload
-): SetPage => ({
+export const setPage = (payload: setPagePayload): SetPage => ({
   type: ActionTypes.SET_PAGE,
   payload,
 });

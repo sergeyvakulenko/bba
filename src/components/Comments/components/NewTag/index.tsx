@@ -1,9 +1,9 @@
-import React, { useState, useMemo, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { AutoComplete, Button, Popover} from "antd";
+import React, { useState, useMemo, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { AutoComplete, Button, Popover } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import { tagsActions, tagsSelectors } from '../../../../data/tags';
-import { postsSelectors } from '../../../../data/posts';
+import { tagsActions, tagsSelectors } from "data/tags";
+import { postsSelectors } from "data/posts";
 
 type TProps = {
   commentId: number;
@@ -17,9 +17,9 @@ const NewTag: React.FC<TProps> = ({ commentId, tags: commentTags }) => {
   const processedTags = useMemo(() => tags.map((t) => ({ value: t })), [tags]);
 
   const [options, setOptions] = useState(processedTags);
-  const [tag, setTag] = useState('');
+  const [tag, setTag] = useState("");
   const [open, setOpen] = useState(false);
-  const allowAdd = tag !== '' && !commentTags.includes(tag);
+  const allowAdd = tag !== "" && !commentTags.includes(tag);
 
   useEffect(() => {
     if (!postId) {
@@ -29,19 +29,21 @@ const NewTag: React.FC<TProps> = ({ commentId, tags: commentTags }) => {
 
   const handleSearch = (searchText: string) => {
     setOptions(
-      !searchText 
-        ? processedTags 
+      !searchText
+        ? processedTags
         : processedTags.filter((p) => p.value.includes(searchText))
     );
   };
 
   const handleCreateTag = () => {
-    dispatch(tagsActions.create({
-      tag: { 
-        value: tag, 
-        commentId 
-      }
-    }));
+    dispatch(
+      tagsActions.create({
+        tag: {
+          value: tag,
+          commentId,
+        },
+      })
+    );
     setOpen(false);
   };
 
@@ -58,21 +60,18 @@ const NewTag: React.FC<TProps> = ({ commentId, tags: commentTags }) => {
         onSearch={handleSearch}
         placeholder="Enter tag"
       />
-      <Button 
-        onClick={handleCreateTag}
-        disabled={!allowAdd}
-      >
+      <Button onClick={handleCreateTag} disabled={!allowAdd}>
         Add
       </Button>
     </div>
-  );  
+  );
 
   return (
-    <Popover 
+    <Popover
       arrowPointAtCenter
-      content={renderContent()} 
+      content={renderContent()}
       destroyTooltipOnHide
-      title="Add new tag" 
+      title="Add new tag"
       trigger="click"
       open={open}
       onOpenChange={handleOpenChange}

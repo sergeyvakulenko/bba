@@ -33,12 +33,12 @@ export interface FetchUsersRequest {
 export interface FetchUsersSuccess {
   type: typeof ActionTypes.FETCH_SUCCESS;
   payload: FetchUsersSuccessPayload;
-};
+}
 
 export interface FetchUsersFailure {
   type: typeof ActionTypes.FETCH_FAILURE;
   payload: FetchUsersFailurePayload;
-};
+}
 
 export type UsersActions =
   | FetchUsersRequest

@@ -1,21 +1,29 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Input, Select } from 'antd';
-import styled from 'styled-components';
-import { postsActions, postsSelectors } from '../../../../data/posts';
-import { usersSelectors } from '../../../../data/users';
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Input, Select } from "antd";
+import styled from "styled-components";
+import { postsActions, postsSelectors } from "data/posts";
+import { usersSelectors } from "data/users";
 
 const { Search: AntdSearch } = Input;
 const { Option } = Select;
 
 const Container = styled.div`
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   width: 100%;
+
+  @media only screen and (min-width: 768px) {
+    justify-content: flex-start;
+  }
 `;
 
 const SearchInputContainer = styled.div`
-  margin-right: 10px;
+  min-width: 200px;
+
+  @media only screen and (min-width: 768px) {
+    margin-right: 10px;
+  }
 `;
 
 const Search = () => {
@@ -29,32 +37,38 @@ const Search = () => {
   }, [search, authorId, dispatch]);
 
   const handleSearch = (value: string) => {
-    dispatch(postsActions.setSearch({ 
-      search: value !== ''
-        ? value
-        : null
-    }));
+    dispatch(
+      postsActions.setSearch({
+        search: value !== "" ? value : null,
+      })
+    );
   };
 
   const handleAuthor = (value: number) => {
-    dispatch(postsActions.setAuthorId({ 
-      authorId: value !== undefined 
-        ? value
-        : null
-    }));
+    dispatch(
+      postsActions.setAuthorId({
+        authorId: value !== undefined ? value : null,
+      })
+    );
   };
 
   return (
     <Container>
       <SearchInputContainer>
-        <AntdSearch allowClear placeholder="Search post" onSearch={handleSearch} />
+        <AntdSearch
+          allowClear
+          placeholder="Search post"
+          onSearch={handleSearch}
+        />
       </SearchInputContainer>
       <SearchInputContainer>
         <Select
           allowClear
           filterOption={(input, option) =>
-            (option!.children as unknown as string).toLowerCase().includes(input.toLowerCase()) 
-            || option?.value?.toString() === input
+            (option!.children as unknown as string)
+              .toLowerCase()
+              .includes(input.toLowerCase()) ||
+            option?.value?.toString() === input
           }
           onChange={handleAuthor}
           placeholder="Search author"
@@ -62,7 +76,11 @@ const Search = () => {
           style={{ width: 200 }}
         >
           {users.map((u) => {
-            return <Option key={u.id} value={u.id}>{u.username}</Option>;
+            return (
+              <Option key={u.id} value={u.id}>
+                {u.username}
+              </Option>
+            );
           })}
         </Select>
       </SearchInputContainer>

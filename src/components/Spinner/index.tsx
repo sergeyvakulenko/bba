@@ -1,5 +1,5 @@
-import { Spin } from 'antd';
-import styled from 'styled-components';
+import { Spin } from "antd";
+import styled from "styled-components";
 
 const Container = styled.div`
   height: 100vh;
@@ -9,6 +9,10 @@ const Container = styled.div`
   justify-content: center;
 `;
 
-const Spinner = () => <Container><Spin size='large' /></Container>;
+const Spinner = () => (
+  <Container>
+    <Spin size="large" />
+  </Container>
+);
 
 export { Spinner };

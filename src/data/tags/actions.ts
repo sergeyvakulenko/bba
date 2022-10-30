@@ -9,7 +9,7 @@ import {
   FetchTagsFailurePayload,
   FetchTagsRequest,
   FetchTagsSuccess,
-  FetchTagsSuccessPayload
+  FetchTagsSuccessPayload,
 } from "./types";
 
 export enum ActionTypes {
@@ -19,7 +19,7 @@ export enum ActionTypes {
   CREATE = "[Tags] Create",
   CREATE_SUCCESS = "[Tags] Create Success",
   CREATE_FAILURE = "[Tags] Create Failure",
-};
+}
 
 export const fetch = (): FetchTagsRequest => ({
   type: ActionTypes.FETCH,
@@ -39,9 +39,7 @@ export const fetchFailure = (
   payload,
 });
 
-export const create = (
-  payload: CreateTagRequestPayload
-): CreateTagRequest => ({
+export const create = (payload: CreateTagRequestPayload): CreateTagRequest => ({
   type: ActionTypes.CREATE,
   payload,
 });

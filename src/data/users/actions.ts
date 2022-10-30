@@ -12,7 +12,7 @@ export enum ActionTypes {
   FETCH_FAILURE = "[Users] Fetch Failure",
   SET_ACTIVE_ID = "[Users] Set Active User Id",
   SEARCH = "[Users] Search",
-};
+}
 
 export const fetch = (): FetchUsersRequest => ({
   type: ActionTypes.FETCH,

@@ -10,7 +10,7 @@ import {
   FetchCommentsRequest,
   FetchCommentsRequestPayload,
   FetchCommentsSuccess,
-  FetchCommentsSuccessPayload
+  FetchCommentsSuccessPayload,
 } from "./types";
 
 export enum ActionTypes {
@@ -20,13 +20,13 @@ export enum ActionTypes {
   CREATE = "[Comments] Create",
   CREATE_SUCCESS = "[Comments] Create Success",
   CREATE_FAILURE = "[Comments] Create Failure",
-};
+}
 
 export const fetch = (
   payload: FetchCommentsRequestPayload
 ): FetchCommentsRequest => ({
   type: ActionTypes.FETCH,
-  payload, 
+  payload,
 });
 
 export const fetchSuccess = (
@@ -47,7 +47,7 @@ export const create = (
   payload: CreateCommentRequestPayload
 ): CreateCommentRequest => ({
   type: ActionTypes.CREATE,
-  payload, 
+  payload,
 });
 
 export const createSuccess = (

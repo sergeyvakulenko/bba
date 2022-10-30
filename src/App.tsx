@@ -1,5 +1,5 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import { Root } from './pages/Root';
+import { Root } from "./pages/Root";
 
 const App = () => (
   <Routes>

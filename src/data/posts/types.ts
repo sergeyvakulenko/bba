@@ -52,32 +52,32 @@ export interface FetchPostsRequest {
 export interface FetchPostsSuccess {
   type: typeof ActionTypes.FETCH_SUCCESS;
   payload: FetchPostsSuccessPayload;
-};
+}
 
 export interface FetchPostsFailure {
   type: typeof ActionTypes.FETCH_FAILURE;
   payload: FetchPostsFailurePayload;
-};
+}
 
 export interface SetActivePostId {
   type: typeof ActionTypes.SET_ACTIVE_ID;
   payload: SetActivePostIdPayload;
-};
+}
 
 export interface SetSearch {
   type: typeof ActionTypes.SET_SEARCH;
   payload: SetSearchPayload;
-};
+}
 
 export interface SetAuthorId {
   type: typeof ActionTypes.SET_AUTHOR_ID;
   payload: SetAuthorIdPayload;
-};
+}
 
 export interface SetPage {
   type: typeof ActionTypes.SET_PAGE;
   payload: setPagePayload;
-};
+}
 
 export type PostsActions =
   | FetchPostsRequest

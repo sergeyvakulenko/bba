@@ -6,11 +6,8 @@ import usersSagas from "./users/sagas";
 
 export function* rootSaga() {
   yield all(
-    [
-      ...postsSagas,
-      ...commentsSagas,
-      ...tagsSagas,
-      ...usersSagas,
-    ].map((t) => fork(t))
+    [...postsSagas, ...commentsSagas, ...tagsSagas, ...usersSagas].map((t) =>
+      fork(t)
+    )
   );
 }

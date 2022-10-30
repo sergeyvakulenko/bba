@@ -1,10 +1,10 @@
-import { ActionTypes } from "./actions"; 
+import { ActionTypes } from "./actions";
 import { TagsActions, TagsState } from "./types";
 
 const initialState: TagsState = {
   pending: false,
   tags: [],
-  error: null
+  error: null,
 };
 
 const reducer = (state = initialState, action: TagsActions) => {
@@ -12,7 +12,7 @@ const reducer = (state = initialState, action: TagsActions) => {
     case ActionTypes.FETCH:
       return {
         ...state,
-        pending: true
+        pending: true,
       };
     case ActionTypes.FETCH_SUCCESS:
       // Since json-server does not support many-to-many relations,
@@ -30,22 +30,26 @@ const reducer = (state = initialState, action: TagsActions) => {
         ...state,
         pending: false,
         tags: uniqueTags,
-        error: null
+        error: null,
       };
     case ActionTypes.FETCH_FAILURE:
       return {
         ...state,
         pending: false,
         tags: [],
-        error: action.payload.error
+        error: action.payload.error,
       };
     case ActionTypes.CREATE:
       return {
         ...state,
-        pending: true
+        pending: true,
       };
     case ActionTypes.CREATE_SUCCESS:
-      const { payload: { tag: { value } } } = action;
+      const {
+        payload: {
+          tag: { value },
+        },
+      } = action;
       const tags = [...state.tags];
       if (!tags.includes(value)) {
         tags.push(value);
@@ -53,20 +57,18 @@ const reducer = (state = initialState, action: TagsActions) => {
       return {
         ...state,
         pending: false,
-        tags: [
-          ...tags
-        ],
-        error: null
+        tags,
+        error: null,
       };
     case ActionTypes.CREATE_FAILURE:
       return {
         ...state,
         pending: false,
-        error: action.payload.error
+        error: action.payload.error,
       };
     default:
       return {
-        ...state
+        ...state,
       };
   }
 };

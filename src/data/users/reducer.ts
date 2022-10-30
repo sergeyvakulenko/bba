@@ -1,11 +1,11 @@
-import { ActionTypes } from "./actions"; 
+import { ActionTypes } from "./actions";
 import { UsersActions, UsersState } from "./types";
 
 const initialState: UsersState = {
   pending: false,
   users: [],
   error: null,
-  activeUserId: null
+  activeUserId: null,
 };
 
 const reducer = (state = initialState, action: UsersActions) => {
@@ -13,25 +13,25 @@ const reducer = (state = initialState, action: UsersActions) => {
     case ActionTypes.FETCH:
       return {
         ...state,
-        pending: true
+        pending: true,
       };
     case ActionTypes.FETCH_SUCCESS:
       return {
         ...state,
         pending: false,
         users: action.payload.users,
-        error: null
+        error: null,
       };
     case ActionTypes.FETCH_FAILURE:
       return {
         ...state,
         pending: false,
         users: [],
-        error: action.payload.error
+        error: action.payload.error,
       };
     default:
       return {
-        ...state
+        ...state,
       };
   }
 };

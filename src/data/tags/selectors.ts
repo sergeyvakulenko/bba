@@ -1,5 +1,5 @@
-import { createSelector } from 'reselect';
-import { RootState } from '../reducer';
+import { createSelector } from "reselect";
+import { RootState } from "../reducer";
 
 const getState = (rootState: RootState) => rootState.tags;
 

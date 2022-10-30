@@ -4,7 +4,7 @@ import {
   createFailure,
   createSuccess,
   fetchFailure,
-  fetchSuccess
+  fetchSuccess,
 } from "./actions";
 import { createTag, getTags } from "./api";
 import { CreateTagRequest } from "./types";
@@ -14,24 +14,26 @@ function* fetchTags() {
     const response = yield* call(getTags);
     yield put(fetchSuccess({ tags: response.data }));
   } catch (e) {
-    yield put(fetchFailure({ error: 'Something went wrong' }));
+    yield put(fetchFailure({ error: "Something went wrong" }));
     // On production projects we usually use more complex error handling,
     // I'll leave it like this for simplicity sake.
-    console.error(e); 
+    console.error(e);
   }
 }
 
 function* create(action: CreateTagRequest) {
   try {
     yield delay(500); // To emulate network
-    const { payload: { tag } } = action;
+    const {
+      payload: { tag },
+    } = action;
     const response = yield* call(createTag, tag);
     yield put(createSuccess({ tag: response.data }));
   } catch (e) {
-    yield put(createFailure({ error: 'Something went wrong' }));
+    yield put(createFailure({ error: "Something went wrong" }));
     // On production projects we usually use more complex error handling,
     // I'll leave it like this for simplicity sake.
-    console.error(e); 
+    console.error(e);
   }
 }
 

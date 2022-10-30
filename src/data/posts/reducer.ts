@@ -1,4 +1,4 @@
-import { ActionTypes } from "./actions"; 
+import { ActionTypes } from "./actions";
 import { PostsActions, PostsState } from "./types";
 
 const initialState: PostsState = {
@@ -16,21 +16,21 @@ const reducer = (state = initialState, action: PostsActions) => {
     case ActionTypes.FETCH:
       return {
         ...state,
-        pending: true
+        pending: true,
       };
     case ActionTypes.FETCH_SUCCESS:
       return {
         ...state,
         pending: false,
         posts: action.payload.posts,
-        error: null
+        error: null,
       };
     case ActionTypes.FETCH_FAILURE:
       return {
         ...state,
         pending: false,
         posts: [],
-        error: action.payload.error
+        error: action.payload.error,
       };
     case ActionTypes.SET_ACTIVE_ID:
       return {
@@ -59,7 +59,7 @@ const reducer = (state = initialState, action: PostsActions) => {
       };
     default:
       return {
-        ...state
+        ...state,
       };
   }
 };
