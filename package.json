@@ -4,11 +4,6 @@
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
-    "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^13.0.0",
-    "@testing-library/user-event": "^13.2.1",
-    "@types/jest": "^27.0.1",
-    "@types/lodash.debounce": "^4.0.7",
     "@types/node": "^16.7.13",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
@@ -36,9 +31,8 @@
   "scripts": {
     "start": "react-scripts start",
     "db": "json-server -p 4000 db.json",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "e2e": "cypress run",
+    "build": "react-scripts build"
   },
   "eslintConfig": {
     "extends": [
@@ -59,6 +53,9 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/cypress": "^8.0.3",
+    "@types/jest": "^29.2.0",
+    "cypress": "^10.11.0",
     "json-server": "^0.17.0"
   }
 }

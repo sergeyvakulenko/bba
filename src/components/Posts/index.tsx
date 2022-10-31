@@ -7,10 +7,21 @@ import { DEFAULT_PAGE_SIZE } from "data/posts/types";
 import { Post } from "./components/Post";
 import { Search } from "./components/Search";
 
+const Container = styled.div`
+  min-height: calc(100vh - 40px);
+  display: flex;
+  flex-direction: column;
+`;
+
+const PostsContainer = styled.div`
+  flex-grow: 1;
+`;
+
 const PaginationContainer = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
+  align-self: flex-end;
 `;
 
 const EmptyStateContainer = styled.div`
@@ -35,7 +46,11 @@ const Posts = () => {
     }
 
     return posts.length > 0 ? (
-      posts.map((p) => <Post key={p.id} post={p} />)
+      <div>
+        {posts.map((p) => (
+          <Post key={p.id} post={p} />
+        ))}
+      </div>
     ) : (
       <EmptyStateContainer>No data</EmptyStateContainer>
     );
@@ -46,22 +61,21 @@ const Posts = () => {
   };
 
   return (
-    <div>
+    <Container>
       <Search />
-      <div>
-        {isLoading ? <Spinner /> : renderPosts()}
-        {posts.length > 0 && (
-          <PaginationContainer>
-            <Pagination
-              onChange={handlePageChange}
-              current={page}
-              defaultPageSize={DEFAULT_PAGE_SIZE}
-              total={total}
-            />
-          </PaginationContainer>
-        )}
-      </div>
-    </div>
+      <PostsContainer>{isLoading ? <Spinner /> : renderPosts()}</PostsContainer>
+      {posts.length > 0 && (
+        <PaginationContainer>
+          <Pagination
+            onChange={handlePageChange}
+            data-testid="pagination"
+            current={page}
+            defaultPageSize={DEFAULT_PAGE_SIZE}
+            total={total}
+          />
+        </PaginationContainer>
+      )}
+    </Container>
   );
 };
 

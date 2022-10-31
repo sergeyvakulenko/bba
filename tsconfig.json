@@ -19,9 +19,10 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "baseUrl": "src"
+    "baseUrl": "src",
+    "types": ["cypress", "@testing-library/cypress"]
   },
   "include": [
     "src"
-  ]
+, "cypress/e2e/Search.cy.tsx"  ]
 }

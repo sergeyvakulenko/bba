@@ -54,9 +54,10 @@ const Search = () => {
 
   return (
     <Container>
-      <SearchInputContainer>
+      <SearchInputContainer data-testid="search-bar-container">
         <AntdSearch
           allowClear
+          data-testid="search-bar"
           placeholder="Search post"
           onSearch={handleSearch}
         />
@@ -64,6 +65,7 @@ const Search = () => {
       <SearchInputContainer>
         <Select
           allowClear
+          data-testid="search-select"
           filterOption={(input, option) =>
             // Not the best practice, but I've copied this from
             // the docs, and we're using Antd for prototyping.

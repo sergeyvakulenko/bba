@@ -12,6 +12,13 @@ function* processFetchParams() {
   const params: IParams = {};
 
   if (search) {
+    // json-server provides q option for fulltext search.
+    // It is not the best solution, because it searches
+    // in post titles too, but that's a limitation of
+    // json-server and I think not very relevant
+    // for the assignment. In real working situation
+    // BE would provide me an option to perform a full-
+    // text search on post body exclusively.
     params.q = search;
   }
 

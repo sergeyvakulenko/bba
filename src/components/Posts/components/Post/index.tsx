@@ -29,6 +29,7 @@ const Post: React.FC<TProps> = memo(({ post }) => {
   return (
     <Container>
       <Card
+        data-testid="post"
         extra={<button onClick={handleOpenPost}>Comments</button>}
         title={title}
         headStyle={{ backgroundColor: "#d3d3d3" }}
